@@ -27,7 +27,30 @@ brew install coreutils
 
 Windows doesn't run shell scripts, yet.
 
+## What's this `grep -v $HOSTNAME`?
+In the event that the script is run inside a Docker container
+communicating with the host daemon, it is possible to kill yourself. I
+suppose a suicidal iceberg is nothing to be afraid of, but `grep -v
+$HOSTNAME` uses the container hostname (usually its ID or name) to
+filter our itself from the list of targets.
+
+Note that if you set `--hostname` when running a container containing
+this script then all bets are off and self-imploding icebergs are a
+distinct possibility.
+
 ## Use cases
+
+1. Copy the script into a docker container and run it in production, e.g.,
+
+    ```
+    docker run \
+	-v /var/run/docker.sock:/var/run/docker.sock \
+	-v $PWD:/iceberg alpine \
+	/bin/sh iceberg/iceberg.linux
+    ```
+    The script as written above won't run, since alpine doesn't come with
+    Docker installed, but that's a minor detail. Also, I don't really mean
+    that you should run this in production unless you're positive.
 
 1. Ensure that services hosted on containers are robust to failure.
 1. Identify single points of failure in a distributed system dependent
