@@ -60,3 +60,11 @@ on containers.
 1. Verify that persistent disks are handled robustly, especially for
 databases in containers.
 1. Other things I haven't thought of.
+
+## Changelog
+
+### Version 0.1.0
+
+- Uniformly at random kills Docker containers
+- Can be run inside a container
+- Initial release
